@@ -1,25 +1,15 @@
-#include "RegularEx.h"
-#include <regex>
+#include"RegularEx.h"
 using  namespace std;
 
-class regular
+regex Regular::preSp()
 {
-public:
-	regex preSpace();
-	regex postSpace();
-
-private:
-
-};
-
-regex regular::preSpace()
-{
-	regex preSp("^[ \t]*");
-	return preSp;
+	return regex("^[ \t]*");
 }
-
-regex regular::postSpace()
+regex Regular::postSp()
 {
-	regex postSp("[ \t]*$");
-	return postSp;
+	return regex("[ \t]*$");
+}
+regex Regular::header()
+{
+	return regex("#[ \t]*include[ \t]*<stdio.h[ \t]*>");
 }
