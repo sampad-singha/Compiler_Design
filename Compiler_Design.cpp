@@ -1,7 +1,9 @@
 #include <iostream>
 #include "RegularEx.h"
 #include <vector>
-#include<fstream>
+#include <fstream>
+#include <string>
+#include <stack>
 using namespace std;
 
 //*************     clearing left and right space/tab    ******************
@@ -49,8 +51,12 @@ int headerCheck(vector<pair<int, string>> code)
         {
             if (!regex_match(s.begin(), s.end(), header))
             {
-                cout<<"Line " <<line << " >> No such header file. \n\t " <<s << endl;
+                cout<<"Line " <<line << " >> No such header file. \n\t " <<s << endl<<endl;
             }
+        }
+        else if (j == 0)
+        {
+            cout << "Line " << line << " >> No header found " << endl<<endl;
         }
         else
         {
@@ -76,11 +82,46 @@ int main()
     }
     vector<pair<int, string>> code = clearSpace(primaryCode);
     
-    int j = 0;
+    /*int j = 0;
     for (auto i : code)
     {
         cout << code[j].first << " " << code[j].second << endl;
         j++;
+    }*/
+    int j = headerCheck(code);
+    Regular regular;
+    regex mainFunc = regular.mainFunc();
+
+    string fullCode = code[j].second; j++;
+    vector<pair<int, string>>::iterator itr = code.begin();
+    auto it = next(itr, j);
+    for (; it != code.end(); it++)
+    {
+        fullCode += code[j].second;
+        j++;
     }
-    headerCheck(code);
+    cout << fullCode << endl << endl;
+    if (!regex_match(fullCode, mainFunc))
+    {
+        cout << "Error in code body " << endl;
+    }
+
+
+    /*j++;
+    string fullCode = code[j].second; j++;
+    vector<pair<int, string>>::iterator itr= code.begin();
+    auto it = next(itr, j);
+    for (; it != code.end(); it++)
+    {
+        fullCode += code[j].second;
+        j++;
+    }*/
+    //cout << fullCode;
+
+
+    //regex fullcodereg = regular.fullCodereg();
+    /*if (regex_match(fullCode, fullcodereg))
+    {
+        cout << "error in code body" << endl;
+    }*/
 }

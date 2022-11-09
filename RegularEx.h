@@ -7,4 +7,7 @@ public:
 	regex preSp();
 	regex postSp();
 	regex header();
+	regex namingConversion();
+	regex mainFunc();
+	regex fullCodereg();
 };
