@@ -1,9 +1,9 @@
-                             include <stdio.h>
+                             #include <stdio.h>
           #  incl ude <stdio.h      >
 
           #CNND
 
-        int main() 
+        int&& float main() 
          
 
 {

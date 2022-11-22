@@ -57,6 +57,7 @@ int headerCheck(vector<pair<int, string>> code)
         else if (j == 0)
         {
             cout << "Line " << line << " >> No header found " << endl<<endl;
+            return j;
         }
         else
         {
@@ -65,6 +66,81 @@ int headerCheck(vector<pair<int, string>> code)
         }
         j++;
     }
+}
+
+
+//*************     Tokenization        ******************************
+void lexAnalyzer(vector<pair<int,string>> code, int line) {
+    string fullCode;
+    vector<pair<int, string>>::iterator it = code.begin() + line;
+    vector<pair<int, string>>::iterator itr = it;
+    for (; it != code.end(); it++)
+    {
+        fullCode += code[line].second;
+        line++;
+    }
+
+    smatch match;
+    vector<pair<string, string>> token;
+    Regular regular;
+    regex keyword = regular.keyword();
+    regex identifier = regular.identifier();
+
+
+    int lexBgn = 0, frd = 0; bool flag = false;
+    for (int i = 0; i < fullCode.size();) {
+        string buffer = fullCode.substr(lexBgn, (lexBgn - frd + 1));
+        while (regex_match(buffer, identifier)) {
+            frd++;
+            buffer += fullCode[frd];
+            flag = true;
+        }
+        if (flag) {
+            frd--;
+            buffer.pop_back();
+            flag = false;
+
+            if (regex_match(buffer, keyword))
+            {
+                token.push_back(make_pair("kw", buffer));
+            }
+            else {
+                token.push_back(make_pair("id", buffer));
+            }
+        }
+        else {
+            if (regex_match(buffer, identifier))
+            {
+                token.push_back(make_pair("id", buffer));
+            }
+            else if (regex_match(buffer, identifier))
+            {
+                token.push_back(make_pair("op", buffer));
+            }
+        }
+        cout << buffer << endl;
+
+
+    }
+    /*for (; itr != code.end(); itr++) {
+        string s = (*itr).second;
+        smatch match;
+        while (true) {
+            if (regex_search(s, match, keyword))
+            {
+                token.push_back(make_pair("kw", match[0]));
+                s = regex_replace(s, keyword, "\0");
+            }
+            else if (regex_search(s, match, identifier))
+            {
+                token.push_back(make_pair("id", match[0]));
+                s = regex_replace(s, identifier, "\0");
+            }
+        }
+    }*/
+
+    
+
 }
 
 int main()
@@ -82,19 +158,39 @@ int main()
     }
     vector<pair<int, string>> code = clearSpace(primaryCode);
     
-    /*int j = 0;
-    for (auto i : code)
-    {
-        cout << code[j].first << " " << code[j].second << endl;
-        j++;
-    }*/
     int j = headerCheck(code);
-    Regular regular;
+
+    
+    lexAnalyzer(code, j);
+
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Regular regular;
     regex mainFunc = regular.mainFunc();
 
     string fullCode = code[j].second; j++;
-    vector<pair<int, string>>::iterator itr = code.begin();
-    auto it = next(itr, j);
+
     for (; it != code.end(); it++)
     {
         fullCode += code[j].second;
@@ -104,7 +200,7 @@ int main()
     if (!regex_match(fullCode, mainFunc))
     {
         cout << "Error in code body " << endl;
-    }
+    }*/
 
 
     /*j++;
@@ -124,4 +220,3 @@ int main()
     {
         cout << "error in code body" << endl;
     }*/
-}
