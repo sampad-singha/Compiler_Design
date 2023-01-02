@@ -129,12 +129,16 @@
   <ItemGroup>
     <ClCompile Include="Compiler_Design.cpp" />
     <ClCompile Include="RegularEx.cpp" />
+    <ClCompile Include="Token.cpp" />
+    <ClCompile Include="tokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="IDE.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RegularEx.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
